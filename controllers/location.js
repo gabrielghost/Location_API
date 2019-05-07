@@ -11,24 +11,7 @@ module.exports = {
 const officeLatLng = {
   lat: 52.502931,
   lng: 13.408249
-}
-
-// credit for code: https://snipplr.com/view/25479/calculate-distance-between-two-points-with-latitude-and-longitude-coordinates/
-function distance(lat1,lon1,lat2,lon2) {
-  return new Promise(resolve => {
-	let R = 6371; // km (change this constant to get miles)
-	let dLat = (lat2-lat1) * Math.PI / 180;
-	let dLon = (lon2-lon1) * Math.PI / 180;
-	let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-		Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-		Math.sin(dLon/2) * Math.sin(dLon/2);
-	let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	let d = R * c;
-	if (d>1) d = roundTo(d, 0)+"km";
-	else if (d<=1) d = roundTo(d*1000,0)+"m";
-	resolve(d);
-})
-}
+};
 
 function locationCreate(req, res) {
   const location = new Location(req.body);
@@ -41,11 +24,9 @@ function locationCreate(req, res) {
   });
 }
 
-// getLocationNames = function(location) { return location.name; }
-
 function locationIndexNames(req, res) {
-    Location
-    .distinct(
+  Location
+  .distinct(
     "name")
     .exec((err, locations) => {
       console.log(locations)
@@ -54,7 +35,7 @@ function locationIndexNames(req, res) {
     });
   }
 
-function locationIndex(req, res) {
+  function locationIndex(req, res) {
     Location
     .find({})
     .exec((err, locations) => {
@@ -63,7 +44,22 @@ function locationIndex(req, res) {
     });
   }
 
-
+  // credit for code: https://snipplr.com/view/25479/calculate-distance-between-two-points-with-latitude-and-longitude-coordinates/
+  function distance(lat1,lon1,lat2,lon2) {
+    return new Promise(resolve => {
+      let R = 6371; // km (change this constant to get miles)
+      let dLat = (lat2-lat1) * Math.PI / 180;
+      let dLon = (lon2-lon1) * Math.PI / 180;
+      let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      let d = R * c;
+      if (d>1) d = roundTo(d, 0)+"km";
+      else if (d<=1) d = roundTo(d*1000,0)+"m";
+      resolve(d);
+    })
+  }
 
   function locationReadWithLocationData (req, res) {
     let id = req.params.id
