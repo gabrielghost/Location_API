@@ -2,9 +2,9 @@ This is the API distance calculator.
 
 Steps to get it running:
 
-1. Npm i in this direcotry to load all the dependencies
+1. `npm i` in this direcotry to load all the dependencies
 
-2. npm start to get the server running
+2. `npm start` to get the server running
 
 3. To upload data and simulate the client passing JSON data to the api, we can use a REST client like Insomnia or Postman to make a POST request to the following URL:
 
